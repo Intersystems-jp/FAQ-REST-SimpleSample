@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2018.1.3 (Build 414U)" ts="2021-05-22 12:08:11">
+<Class name="User.REST">
+<Super>%CSP.REST</Super>
+<TimeChanged>65885,82563.844642</TimeChanged>
+<TimeCreated>65885,69541.226051</TimeCreated>
+
+<XData name="UrlMap">
+<XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
+<Data><![CDATA[
+<Routes>
+<Route Url="/req1" Method="GET" Call="req1"/>
+<Route Url="/req2" Method="GET" Call="req2"/>
+</Routes>
+]]></Data>
+</XData>
+
+<Method name="req1">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %response As %CSP.Response
+	set name1=%request.Get("NAME1")
+	set name2=%request.Get("NAME2")
+	set age=%request.Get("AGE")
+
+	set %response.ContentType="application/json"
+	set %response.CharSet="utf8"
+	set tdobject = {}
+	set tdobject.name=name1_" "_name2
+	set tdobject.age=age
+	write tdobject.%ToJSON()
+	    
+    quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="req2">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set %response.ContentType="application/json"
+	set JResponse={}
+	set JResponse.name=%request.Get("p1")_" "_%request.Get("p2")
+	set JResponse.age=100
+	write JResponse.%ToJSON()
+	
+	quit $$$OK
+]]></Implementation>
+</Method>
+
+<Parameter name="HandleCorsRequest">
+<Description>
+This parameter influences the CORS support. The default is an empty string meaning 'not specified'.
+If set to true (1) then CORS processing is ON. If set to false (0) then CORS processing is OFF.
+If left unset ("") then the decision to process CORS is delegated to the setting on the URL map route.</Description>
+<Default>1</Default>
+</Parameter>
+</Class>
+
+
+<CSP name="sampleJSON.html" application="/csp/user/" default="1"><![CDATA[
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+<body>
+  <form name="xxx" method="post" action="">
+   <input type="button" name="test" onclick="go();" value="push" /></p>
+  </form>
+
+<script type="text/javascript">
+function go() {
+  var url="/simple/req1";
+  var params = {"NAME1" : "山田", "NAME2":"太郎","AGE":20};
+  var queryparams= new URLSearchParams(params);
+  url=url+"?"+ queryparams
+  	fetch(url,{
+	  headers:{"Accept":"application/json"},
+	}
+  	).then(function(Response) {
+          console.log("status=" + Response.status);
+          return Response.json();
+      }).then(function(json) {
+        alert("取得結果=" +JSON.stringify(json));
+      });
+ }
+
+</script>
+</body>
+</html>
+]]></CSP>
+</Export>

@@ -1,0 +1,29 @@
+﻿<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+<body>
+  <form name="xxx" method="post" action="">
+   <input type="button" name="test" onclick="go();" value="push" /></p>
+  </form>
+
+<script type="text/javascript">
+function go() {
+  var url="/simple/req1";
+  var params = {"NAME1" : "山田", "NAME2":"太郎","AGE":20};
+  var queryparams= new URLSearchParams(params);
+  url=url+"?"+ queryparams
+  	fetch(url,{
+	  headers:{"Accept":"application/json"},
+	}
+  	).then(function(Response) {
+          console.log("status=" + Response.status);
+          return Response.json();
+      }).then(function(json) {
+        alert("取得結果=" +JSON.stringify(json));
+      });
+ }
+
+</script>
+</body>
+</html>
