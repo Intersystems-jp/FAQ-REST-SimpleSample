@@ -1,4 +1,4 @@
-# InterSystems 製品で REST の操作をするシンプルなサンプル
+# InterSystems 製品を利用した REST/JSON の操作方法を確認できる簡単サンプル
 
 REST クライアント、HTML、ターミナルからデータ（JSON）を送信し、サーバ（InterSystems製品）で JSON 形式のデータを返す REST を使った簡単なサンプルをご紹介します。
 
