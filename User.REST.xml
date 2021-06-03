@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2018.1.3 (Build 414U)" ts="2021-05-22 12:08:11">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2018.1.3 (Build 414U)" ts="2021-06-03 15:56:20">
 <Class name="User.REST">
 <Super>%CSP.REST</Super>
-<TimeChanged>65885,82563.844642</TimeChanged>
+<TimeChanged>65898,57275.463603</TimeChanged>
 <TimeCreated>65885,69541.226051</TimeCreated>
+
+<Parameter name="CONTENTTYPE">
+<Default>application/json</Default>
+</Parameter>
+
+<Parameter name="CHARSET">
+<Default>utf-8</Default>
+</Parameter>
+
+<Parameter name="CONVERTINPUTSTREAM">
+<Default>1</Default>
+</Parameter>
 
 <XData name="UrlMap">
 <XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
@@ -19,13 +31,10 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	#dim %response As %CSP.Response
 	set name1=%request.Get("NAME1")
 	set name2=%request.Get("NAME2")
 	set age=%request.Get("AGE")
 
-	set %response.ContentType="application/json"
-	set %response.CharSet="utf8"
 	set tdobject = {}
 	set tdobject.name=name1_" "_name2
 	set tdobject.age=age
@@ -39,7 +48,6 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	set %response.ContentType="application/json"
 	set JResponse={}
 	set JResponse.name=%request.Get("p1")_" "_%request.Get("p2")
 	set JResponse.age=100

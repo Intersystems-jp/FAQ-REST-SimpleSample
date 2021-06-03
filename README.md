@@ -71,13 +71,10 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 ```
 ClassMethod req1() As %Status
 {
-	#dim %response As %CSP.Response
 	set name1=%request.Get("NAME1")
 	set name2=%request.Get("NAME2")
 	set age=%request.Get("AGE")
 
-	set %response.ContentType="application/json"
-	set %response.CharSet="utf8"
 	set tdobject = {}
 	set tdobject.name=name1_" "_name2
 	set tdobject.age=age
@@ -86,6 +83,18 @@ ClassMethod req1() As %Status
     quit $$$OK
 }
 ```
+
+>HTTP 応答の Content-Type ヘッダの設定は、REST ディスパッチクラスのクラスパラメータ **CONTENTTYPE** に **"application/json"** が設定され、charset の指定は、クラスパラメータ **CHARSET** に設定してあるので、クラスメソッド内で指定する必要はありません。
+>また、今回の例にはありませんが、メッセージボディの情報をクラスパラメータ **CHARSET** で自動的に変換させたい場合は、クラスパラメータ **CONVERTINPUTSTREAM** に **1** を設定します（設定例は以下例文をご参照ください）。
+
+クラスパラメータの例文：
+```
+Parameter CONTENTTYPE = "application/json";
+
+Parameter CHARSET = "utf-8";
+
+Parameter CONVERTINPUTSTREAM = 1;
+``` 
 
 以下 URL を利用して、/simple/req1 のテストが行えます（クエリ文字列に指定した内容が JSON として返送されます）。
 
@@ -140,4 +149,3 @@ set sts=req.Get("/simple/req1")
 set ans=req.HttpResponse.Data.Read()
 write ans
 ```
-
